@@ -1,3 +1,4 @@
+CREATE VIEW v1 AS
 SELECT SSN, FName, LName, PName, P.DNum, D.DNumber, D.DName
 FROM Employee E JOIN Works_On W ON E.SSN = W.ESSN
 JOIN Project P ON W.PNum = P.PNumber AND E.DNum = P.DNum
@@ -10,5 +11,20 @@ SELECT SSN, FName,LName, DNum
 FROM Employee;
 CREATE VIEW
 SELECT * FROM v1;
+
+//LATIHAN//
+CREATE VIEW d1 AS
+SELECT SSN, FNAME,LNAME, P.PNAME
+FROM Employee E JOIN DEPARTMENT D ON E.SSN = D.MGRSSN
+JOIN Works_On W ON D.MGRSSN = W.ESSN
+JOIN Project P ON W.PNum = P.PNumber
+
+SELECT * FROM v4;
+
+SELECT SSN, FName, LName, PName, P.DNum, D.DNumber, D.DName
+FROM Employee E JOIN Works_On W ON E.SSN = W.ESSN
+JOIN Project P ON W.PNum = P.PNumber AND E.DNum = P.DNum
+JOIN Department D ON P.DNum = D.DNumber
+WHERE SSN = MGRSSN;
 
 
