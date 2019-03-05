@@ -1,12 +1,14 @@
-company=> SELECT SSN, FName, LName, PName, P.DNum, D.DNumber, D.DName
-company-> FROM Employee E JOIN Works_On W ON E.SSN = W.ESSN
-company-> JOIN Project P ON W.PNum = P.PNumber AND E.DNum = P.DNum
-company-> JOIN Department D ON P.DNum = D.DNumber
-company-> ORDER BY P.PName;
+SELECT SSN, FName, LName, PName, P.DNum, D.DNumber, D.DName
+FROM Employee E JOIN Works_On W ON E.SSN = W.ESSN
+JOIN Project P ON W.PNum = P.PNumber AND E.DNum = P.DNum
+JOIN Department D ON P.DNum = D.DNumber
+ORDER BY P.PName;
 
 
-company=> CREATE VIEW v1 AS
-company-> SELECT SSN, FName,LName, DNum
-company-> FROM Employee;
+CREATE VIEW v1 AS
+SELECT SSN, FName,LName, DNum
+FROM Employee;
 CREATE VIEW
-company=> SELECT * FROM v1;
+SELECT * FROM v1;
+
+
