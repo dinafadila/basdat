@@ -97,4 +97,21 @@ AFTER DELETE
 ON Employee
 EXECUTE procedure show() ;
 
+4.
+CREATE FUNCTION display1 ()
+RETURNS TRIGGER AS
+$BODY$
+BEGIN
+SELECT SSN,FName,LName, hours
+FROM Employee E, Works_On W
+WHERE SSN = ESSN
+GROUP BY SSN,FName, LName, hours
+ORDER BY SSN;
+END;
+$BODY$
+language plpgsql volatile;
 
+CREATE TRIGGER d11
+AFTER insert
+on Employee
+EXECUTE procedure display1() ;
