@@ -27,12 +27,23 @@ CREATE VIEW d3 (Nomor,Nama) AS
 SELECT DNumber, DName
 FROM Department;
 
+CONCAT = UNTUK MENGGABUNGKAN NAMA AWAL DAN AKHIR 
+
 2b.
-CREATE VIEW d4 AS
-SELECT SSN, CONCAT (FName,' ',LName) AS EName,DName
-FROM Employee E, Department D, Works_On W
-WHERE E.DNum = D.DNumber AND W.hours > 140
-order by E.ssn;
+CREATE VIEW jam AS
+SELECT ESSN, sum(hours)
+FROM Works_On
+Group by essn
+Order by essn;
+
+CREATE VIEW d9 AS
+SELECT SSN,CONCAT(FName,' ',LName) as EName, DName
+FROM Employee E, Department D, jam J
+WHERE
+E.DNum = D.DNumber AND
+E.ssn = J.essn AND
+J.sum > 140
+Order by ESSN;
 
 1b.
 create view counter as
@@ -49,6 +60,41 @@ E.ssn = C.essn AND
 count = 1
 order by C.ESSN;
 
+5. 
+company=> CREATE VIEW AVERAGE AS
+company-> SELECT ESSN,AVG(HOURS)
+company-> FROM WORKS_ON
+company-> GROUP BY ESSN
+company-> ORDER BY ESSN;
+CREATE VIEW
+company=> SELECT * FROM AVERAGE;
 
+SELECT DEPENDENT_NAME, SEX, BDATE,RELATIONSHIP
+FROM Dependent D, Average A, Counter C
+WHERE
+D.Essn = A.essn AND
+A.essn = C.essn AND
+avg = 70 and COUNT = 2
+ORDER BY D.ESSN;
+
+3.
+CREATE FUNCTION SHOW ()
+RETURNS TRIGGER AS
+$BODY$
+begin
+SELECT count(distinct ssn), D.DName
+FROM Department D , Employee E
+WHERE
+E.DNUm = D.DNumber
+group by D.Dname
+order by count(distinct ssn) desc;
+end;
+$BODY$
+language plpgsql volatile;
+
+CREATE trigger d01
+AFTER DELETE
+ON Employee
+EXECUTE procedure show() ;
 
 
