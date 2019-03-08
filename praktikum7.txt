@@ -35,9 +35,20 @@ WHERE E.DNum = D.DNumber AND W.hours > 140
 order by E.ssn;
 
 1b.
-CREATE VIEW d6 AS
-SELECT ESSN, FName, LName, Dependent_Name, Relationship
-FROM Works_On
-Group by Pnum
+create view counter as
+SELECT essn, count(pnum)
+from works_on
+group by essn
+order by essn;
+
+SELECT C.ESSN, FName, LName, Dependent_name, relationship
+from employee E, counter C, dependent D
+where
+D.essn = E.ssn AND
+E.ssn = C.essn AND
+count = 1
+order by C.ESSN;
+
+
 
 
